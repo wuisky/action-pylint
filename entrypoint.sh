@@ -24,11 +24,19 @@ if [[ "$INPUT_PYLINT_RC" == "" ]]; then
   # Do not supply the rcfile option if it is not provided
   rcfile_option=""
 else
-  rcfile_option="--rcfile=\"${INPUT_PYLINT_RC}\""
+  rcfile_option="--rcfile=${INPUT_PYLINT_RC}"
 fi
 
 echo "[action-pylint] Checking python code with the pylint linter and reviewdog..."
 exit_val="0"
+
+echo "rcfile_option=${rcfile_option}"
+echo "INPUT_PYLINT_ARGS=${INPUT_PYLINT_ARGS}"
+echo "INPUT_GLOB_PATTERN=${INPUT_GLOB_PATTERN}"
+
+ls -alt
+cmd_line="pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1"
+echo ${cmd_line}
 
 pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
   /tmp/reviewdog -efm="%f:%l:%c: %m" \
