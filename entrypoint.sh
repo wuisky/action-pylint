@@ -13,10 +13,9 @@ export REVIEWDOG_VERSION=v0.14.1
 echo "[action-pylint] Installing reviewdog..."
 wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b /tmp "${REVIEWDOG_VERSION}"
 
-if [[ "$(which pylint)" == "" ]]; then
-  echo "[action-pylint] Installing pylint package..."
-  python -m pip install pylint==2.17.4
-fi
+echo "[action-pylint] Installing pylint package..."
+python -m pip install pylint==2.17.4
+
 echo "[action-pylint] pylint version:"
 pylint --version
 
