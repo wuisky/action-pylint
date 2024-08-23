@@ -39,16 +39,15 @@ echo ${cmd_line}
 # try pylint is work
 pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} || exit_val="$?"
 
-
-# # check pylint and posted by reviewdog
-# python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
-#   /tmp/reviewdog -efm="%f:%l:%c: %m" \
-#     -name="${INPUT_TOOL_NAME}" \
-#     -reporter="${INPUT_REPORTER}" \
-#     -filter-mode="${INPUT_FILTER_MODE}" \
-#     -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-#     -level="${INPUT_LEVEL}" \
-#     ${INPUT_REVIEWDOG_FLAGS} || exit_val="$?"
+# check pylint and posted by reviewdog
+python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
+  /tmp/reviewdog -efm="%f:%l:%c: %m" \
+    -name="${INPUT_TOOL_NAME}" \
+    -reporter="${INPUT_REPORTER}" \
+    -filter-mode="${INPUT_FILTER_MODE}" \
+    -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
+    -level="${INPUT_LEVEL}" \
+    ${INPUT_REVIEWDOG_FLAGS} || exit_val="$?"
 
 # echo "[action-pylint] Clean up reviewdog..."
 # rm /tmp/reviewdog
