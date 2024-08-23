@@ -37,7 +37,10 @@ ls -alt
 cmd_line="python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1"
 echo ${cmd_line}
 # try pylint is work
-python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} || exit_val="$?"
+pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} || exit_val="$?"
+if [[ "${exit_val}" -ne '0' ]]; then
+  exit 1
+fi
 
 # check pylint and posted by reviewdog
 python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
