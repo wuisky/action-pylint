@@ -17,7 +17,7 @@ echo "[action-pylint] Installing pylint package..."
 python -m pip install pylint==2.17.4
 
 echo "[action-pylint] pylint version:"
-pylint --version
+python -m pylint --version
 
 if [[ "$INPUT_PYLINT_RC" == "" ]]; then
   # Do not supply the rcfile option if it is not provided
@@ -34,10 +34,10 @@ echo "INPUT_PYLINT_ARGS=${INPUT_PYLINT_ARGS}"
 echo "INPUT_GLOB_PATTERN=${INPUT_GLOB_PATTERN}"
 
 ls -alt
-cmd_line="pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1"
+cmd_line="python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1"
 echo ${cmd_line}
 
-pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
+python -m pylint --score n ${rcfile_option} ${INPUT_PYLINT_ARGS} ${INPUT_GLOB_PATTERN} 2>&1 | # Removes ansi codes see https://github.com/reviewdog/errorformat/issues/51
   /tmp/reviewdog -efm="%f:%l:%c: %m" \
     -name="${INPUT_TOOL_NAME}" \
     -reporter="${INPUT_REPORTER}" \
